@@ -5,6 +5,25 @@ const router = express.Router();
 import axios from 'axios';
 const Document = require('pelias-model').Document; // import document model
 
+// initialize parent fields
+const placesTypes = [ 
+    'ocean', 
+    'marinearea',
+    'continent',
+    'empire',
+    'country',
+    'dependency',
+    'macroregion',
+    'region',
+    'macrocounty',
+    'county',
+    'localadmin',
+    'locality',
+    'borough',
+    'neighbourhood',
+    'postalcode'
+];
+
 // performs reverse address search and returns properties data containing country, region, and etch data
 const getParents = async (req: Request) => {
     try {
@@ -20,7 +39,7 @@ const getGID = (inputString: String) => {
     const parts = inputString.split(":");
 
     if (parts.length >= 3) {
-        const result = parts.slice(2).join(":");
+        const result = parts.slice(2).join(":"); // get the last element
         return(result);
 
     } else {
@@ -30,18 +49,31 @@ const getGID = (inputString: String) => {
 
 router.post("/api/data", async (req, res) => {
     try { 
-        var rev_add = await getParents(req);    // perform reverse geocoding, returns properties (country, region)
-        console.log(rev_add);                   
-
+        var rev_add = await getParents(req);    // perform reverse geocoding
+        console.log(rev_add);
+        
+        // create the document
         var doc = new Document( 'custom', 'venue', req.body.source_id)
-            .setName( 'default', req.body.name )
-            .addCategory( req.body.category )
-            .setCentroid({ lon: req.body.lon, lat: req.body.lat})
-            .addParent( 'country', rev_add.country, getGID(rev_add.country_gid), rev_add.country_a) 
+        .setName( 'default', req.body.name )
+        .addCategory( req.body.category )
+        .setCentroid({ lon: req.body.lon, lat: req.body.lat})
 
-        // directly stringify the inner object after removing the document wrapper
+        // add parent fields to document
+        placesTypes.forEach( (place) => {
+            const place_a = `${place}_a`;       // store country_a, locality_a
+            const place_gid = `${place}_gid`;   // store country_gid, locality_gid
+
+            // check if country, country_a, country_gid exists
+            if (place in rev_add && place_a in rev_add && place_gid in rev_add) {
+                doc.addParent( place, rev_add[place], getGID(rev_add[place_gid]), rev_add[place_a])
+            }
+        });
+
+        console.log(doc); 
+
+        //directly stringify the inner object after removing the document wrapper
         const data = JSON.stringify({...doc});
-
+        
         // make the POST request
         var uniqueID = ["custom", "venue", req.body.source_id].join(":");
 

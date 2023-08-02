@@ -1,7 +1,7 @@
 <template>
-  <div class="m-5">
+  <div>
     <!-- Nav bar-->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar m-5" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
           <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28">
@@ -147,5 +147,4 @@ export default defineComponent({
 
 <style lang="scss">
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
-
 </style>
