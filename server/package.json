@@ -21,6 +21,7 @@
     "pelias-config": "^5.2.0",
     "pelias-dbclient": "^2.15.0",
     "pelias-model": "^9.4.0",
+    "pelias-query": "^11.0.0",
     "pelias-schema": "^6.6.0",
     "stream": "^0.0.2",
     "stream-array": "^1.1.2"
