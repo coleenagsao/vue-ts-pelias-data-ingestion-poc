@@ -52,13 +52,13 @@ const getGID = (inputString: String) => {
 
 router.post("/add", async (req, res) => {
     try { 
-        //.features[0].properties
         var rev_add = await getParents(req);    // perform reverse geocoding 
         
-        if (rev_add.features.length != 0){        
+        // check if there are data fetched before adding   
+        if (rev_add.features.length != 0){  
+            
+            // save data fetched
             rev_add = rev_add.features[0].properties;
-
-            console.log(rev_add);
 
             // create the document
             var doc = new Document( 'custom', 'venue', req.body.source_id)
@@ -82,10 +82,11 @@ router.post("/add", async (req, res) => {
             //directly stringify the inner object after removing the document wrapper
             const data = JSON.stringify({...doc});
             
-            // make the POST request
+            // create id for custom data (custom:venue:id)
             var uniqueID = ["custom", "venue", req.body.source_id].join(":");
 
-            axios.put('http://localhost:9200/pelias/_create/' + uniqueID, data, {
+            // make the POST request
+            axios.post('http://localhost:9200/pelias/_create/' + uniqueID, data, {
                 headers: {
                 'Content-Type': 'application/json',
                 },
@@ -99,10 +100,8 @@ router.post("/add", async (req, res) => {
 
             res.send({message: doc});
         } else {
-            res.send({message: "Can't reverse geocode"});
+            res.send({message: "No places on coordinates"});
         }
-    
-
     } catch (err) {
         res.status(500).json({error: "Error"});
     }
