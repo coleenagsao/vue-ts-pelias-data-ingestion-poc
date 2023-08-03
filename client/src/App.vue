@@ -80,7 +80,7 @@
               </div>
             </fieldset>
                                
-            <button class="button is-primary" type="submit">Add</button>
+            <button class="button is-link" type="submit">Add</button>
 
           </form>
         </div>
