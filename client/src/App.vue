@@ -129,7 +129,7 @@ export default defineComponent({
         })
 
         // send post request
-        const response = await axios.post('http://localhost:3000/api/data', 
+        const response = await axios.post('http://localhost:3000/add', 
           data, { headers:{"Content-Type" : "application/json"} });
         console.log(response.data);
         

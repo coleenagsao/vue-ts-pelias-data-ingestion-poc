@@ -3,7 +3,8 @@
 import express, {Request, Response} from 'express';
 const router = express.Router();
 import axios from 'axios';
-const Document = require('pelias-model').Document; // import document model
+
+const Document = require('pelias-model').Document;      // import document model
 
 // initialize parent fields
 const placesTypes = [ 
@@ -27,8 +28,10 @@ const placesTypes = [
 // performs reverse address search and returns properties data containing country, region, and etch data
 const getParents = async (req: Request) => {
     try {
-      const response = await axios.get(`http://localhost:4000/v1/reverse?point.lat=${req.body.lat}&point.lon=${req.body.lon}`);
-      return response.data;
+        // send GET request to pelias API reverse geocode endpoint
+        const response = await axios.get(`http://localhost:4000/v1/reverse?point.lat=${req.body.lat}&point.lon=${req.body.lon}`);
+        
+        return response.data;
     } catch (error) {
       throw new Error((error as Error).message);
     }
@@ -46,13 +49,8 @@ const getGID = (inputString: String) => {
         console.log("Not enough colons in the string to extract the desired part.");
     }
 }
-/* 
-custom:venue:139
-custom:venue:149
-zFXkkIkB_wftcQ4eJ6pM
-openstreetmap:venue:node/10984521006
-*/
-router.post("/api/data", async (req, res) => {
+
+router.post("/add", async (req, res) => {
     try { 
         //.features[0].properties
         var rev_add = await getParents(req);    // perform reverse geocoding 
