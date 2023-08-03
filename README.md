@@ -18,7 +18,7 @@ Although we have achieved the successful ingestion of data into the Pelias index
 ## Installation
 To run the project locally, please follow these steps:
 
-1. Begin by cloning the repository to your local machine using the command: `git clone [repository URL]`
+1. Begin by cloning the repository to your local machine using the command: `https://github.com/coleenagsao/vue-ts-pelias-data-ingestion-poc.git`
 2. Navigate to the "frontend" directory by running the command: `cd frontend`
 3. Install the necessary dependencies by executing: `npm install`
 4. Repeat the dependency installation process for the "backend" directory as well.
