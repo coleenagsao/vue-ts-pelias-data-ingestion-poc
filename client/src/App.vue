@@ -3,9 +3,13 @@
     <!-- Nav bar-->
     <nav class="navbar m-5" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28">
-        </a>
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-database"></i>
+            <font-awesome-icon icon="fa-solid fa-database" />
+          </span>
+          <h1 class="title is-5">Data Ingestion</h1>
+        </span>
       </div>
     </nav>
 
