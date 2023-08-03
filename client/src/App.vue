@@ -27,26 +27,15 @@
                   </div>
                 </div>
 
-                <!--Required: Layer -->
-                <div class="column ">
-                  <div class="field is-expanded">
-                    <label class="label">Layer</label>
-                    <div class="select is-fullwidth">
-                      <select v-model="layer">
-                        <option>Venue</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
                 <!--Required: Category -->
                 <div class="column">
                   <div class="field">
                     <label class="label">Category</label>
                     <div class="select is-fullwidth">
                       <select v-model="category">
-                        <option disabled value="">Select a layer</option>
+                        <option disabled value="">Select a category</option>
                         <option>Food</option>
+                        <option>Nightlife</option>
                         <option>Recreation</option>
                         <option>Entertainment</option>
                       </select>
@@ -105,22 +94,16 @@ export default defineComponent({
   component: {  },
   setup(props, {emit}){
     const id = ref("");
-    const layer = ref("");
     const category_options = ref(["food", "nightlife","recreation", "entertainment"]);
     const category = ref([]);
     const name = ref("");
-    const houseNumber = ref("");
-    const street = ref("");
     const lat = ref("");
     const lon = ref("");
 
     const submit = async () => {
       try {
-
         // create json with user's input
         let data = JSON.stringify({
-          source: 'custom',
-          layer: layer.value,
           source_id: id.value,
           category: category.value,
           name: name.value,
@@ -138,11 +121,9 @@ export default defineComponent({
       }
     }
 
-    return { id, layer, name, houseNumber, street, category, category_options, lat, lon, submit }
+    return { id, name, category, category_options, lat, lon, submit }
   }
 })
-
-
 </script>
 
 <style lang="scss">
