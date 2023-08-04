@@ -107,7 +107,8 @@ router.post("/add", async (req, res) => {
     }
 })
 
-router.post("/api/data1", async (req, res) => {
+
+router.post("/api/addwoparewnts", async (req, res) => {
     try { 
         // create the document
         var doc = new Document( 'custom', 'venue', req.body.source_id)
